@@ -15,6 +15,7 @@ blocks:
             - bundle config set deployment 'true'
             - bundle install --path vendor/bundle
             - cache store
+    dependencies: []
   - name: Tests
     task:
       jobs:
@@ -24,8 +25,25 @@ blocks:
             - cache restore
             - bundle install --path vendor/bundle
             - bundle exec rspec
+    dependencies:
+      - Install dependencies
+  - name: Docker Experiment
+    dependencies: []
+    task:
+      agent:
+        machine:
+          type: e1-standard-2
+          os_image: ubuntu2004
+        containers:
+          - name: main
+            image: 'semaphoreci/ubuntu:20.04'
+      jobs:
+        - name: 'Job #1'
+          commands: []
 promotions:
   - name: Dockerize
     pipeline_file: docker-build.yml
     auto_promote_on:
       - result: passed
+    auto_promote:
+      when: result = 'passed'
