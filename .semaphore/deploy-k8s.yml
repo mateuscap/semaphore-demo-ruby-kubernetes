@@ -7,9 +7,6 @@ agent:
 blocks:
   - name: Deploy to Kubernetes
     task:
-      secrets:
-        - name: do-k8s
-        - name: dockerhub
       env_vars: []
       jobs:
         - name: Deploy
@@ -21,8 +18,6 @@ blocks:
             - kubectl apply -f _deploy.yml
   - name: Tag latest release
     task:
-      secrets:
-        - name: dockerhub
       jobs:
         - name: docker tag latest
           commands:
