@@ -39,7 +39,8 @@ blocks:
             image: 'registry.semaphoreci.com/android:31'
       jobs:
         - name: 'Job #1'
-          commands: []
+          commands:
+            - echo "nothing"
 promotions:
   - name: Dockerize
     pipeline_file: docker-build.yml
